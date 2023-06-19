@@ -1,0 +1,28 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+    margin-top: 5px;
+}
+
+.colors {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+}

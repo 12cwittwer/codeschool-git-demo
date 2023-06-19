@@ -1,0 +1,57 @@
+img {
+    width: 300px;
+    max-width: 300px;
+}
+
+.flexy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flexHeader {
+    font-size: 36px;
+    font-weight: lighter;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    font-family: 'Lora', serif;
+    min-height: 450px;
+    max-width: 800px;
+}
+.row img, .row div {
+    flex: 50%;
+}
+
+.link {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+::marker{
+    color: rgb(165, 157, 0);
+    font-size: 24px;
+}
+
+button {
+    border-style: none;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-radius: 12px;
+}
+
+button:hover {
+    transform: scale(1.05);
+}

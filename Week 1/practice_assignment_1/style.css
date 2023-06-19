@@ -1,0 +1,87 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: black;
+}
+
+.header {
+    background-image: linear-gradient(
+        to right,
+        rgba(25,25,25,.8),
+        rgba(25,25,25,.3)
+    ), url(mixer-2586320_1280.jpg);
+    background-size: cover;
+    background-position: center;
+    height: 450px;
+    max-width: 1200;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-top: 2%;
+}
+
+.call-to-action {
+    font-family: 'Roboto', sans-serif;
+    font-size: 25px;
+    color: white;
+    margin-left: 10%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+button {
+    background-color: #a1a1a178;
+    color: white;
+    margin-left: 10%;
+    padding: 10px;
+    border: none;
+    font-family: 'Roboto' , sans-serif;
+    border-radius: 5px;
+}
+
+.hero-header {
+    font-family: 'Roboto', sans-serif;
+    font-size: 35px;
+    color: white;
+    margin-left: 10%;
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #3f3f3f8b;
+}
+
+nav.navbar {
+    background-color: black;
+    color: white;
+    margin-top: 5px;
+    font-family: 'Roboto' , sans-serif;
+}
+
+nav.navbar ul {
+    display: block;
+    overflow: hidden;
+    list-style-type: none;
+    border-bottom: 2px solid white;
+}
+
+nav.navbar li{
+    float: left;
+    padding: 5px;
+}
+
+nav.navbar li a {
+    text-decoration: none;
+    text-align: center;
+    padding: 10px
+}
+
+nav.navbar li:hover {
+    background-color: white;
+    color: black;
+}
+

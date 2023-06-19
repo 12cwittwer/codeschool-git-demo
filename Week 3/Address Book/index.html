@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue Address Book</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="header">Vue Address Book</div>
+        <div class="get-info">
+            <input type="text" v-model="name" placeholder="Name">
+            <input type="text" v-model="email" placeholder="E-Mail">
+            <button v-on:click="saveInfo()">Submit</button>
+            <p class="feedback">{{feedback}}</p>
+        </div>
+        <div class="logbook">
+            <div v-for="info in booked" class="info">
+                <p></p>{{info.name}}:<i>{{info.email}}</i></p>
+                <button v-if="checkEdit()" v-on:click="removeInfo(info)" class="info-button">X</button>
+            </div>
+        </div>
+        <button v-on:click="changeEdit()" class="edit-button">Edit</button>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

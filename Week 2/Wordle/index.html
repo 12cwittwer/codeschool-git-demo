@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@200&display=swap" rel="stylesheet">  
+</head>
+<body>
+    <div class="start-screen">
+        <div id="startWordle" class="start-wordle">Wordle</div>
+        <button class="start-button" id="startButton">START!</button>
+    </div>
+    <div class="header">
+        <span class="wordle-title">Wordle</span>
+    </div>
+    <table id="guessTable">
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+        <tr>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+            <td class="tile"></td>
+        </tr>
+    </table>
+    <div id="current-word" class="no-show"></div>
+    <div id="uiDiv" class="no-show">
+        <input id="userInput">
+        <button id="guessButton">Submit</button>
+    </div>
+    <div class="keyboard">
+    <div class="letter-row">
+        <span class="letter Q">Q</span>
+        <span class="letter W">W</span>
+        <span class="letter E">E</span>
+        <span class="letter R">R</span>
+        <span class="letter T">T</span>
+        <span class="letter Y">Y</span>
+        <span class="letter U">U</span>
+        <span class="letter I">I</span>
+        <span class="letter O">O</span>
+        <span class="letter P">P</span>
+    </div>
+    <div class="letter-row">
+        <span class="letter A">A</span>
+        <span class="letter S">S</span>
+        <span class="letter D">D</span>
+        <span class="letter F">F</span>
+        <span class="letter G">G</span>
+        <span class="letter H">H</span>
+        <span class="letter J">J</span>
+        <span class="letter K">K</span>
+        <span class="letter L">L</span>
+    </div>
+    <div class="letter-row">
+        <span class="letter Z">Z</span>
+        <span class="letter X">X</span>
+        <span class="letter C">C</span>
+        <span class="letter V">V</span>
+        <span class="letter B">B</span>
+        <span class="letter N">N</span>
+        <span class="letter M">M</span>
+    </div>
+    </div>
+    <div id="feedback"></div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.3/moment.min.js"></script>
+<script src="app.js"></script>
+</html>

@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 50vw;
+}
+
+.loading {
+    background-image: url(iconmonstr-synchronization-3.svg);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    height: 100px;
+    width: 100px;
+
+    animation: loading 0.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+    100% {
+        transform: rotate(0deg);
+    }
+    0% {
+        transform: rotate(360deg);
+    }
+}

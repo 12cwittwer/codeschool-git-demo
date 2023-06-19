@@ -1,0 +1,163 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: var(--main-text);
+    color: var(--clrtext)
+}
+
+:root {
+    --main-text:'Montserrat', sans-serif;
+    --clrheader: #A86458;
+    --clrback: #47A87F;
+    --clrtext: #98F5CD;
+}
+
+body {
+    background-color: rgb(44, 44, 44);
+}
+
+.header {
+    display: flex;
+    background-color: var(--clrheader);
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+.sticky {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    list-style-type: none;
+    gap: 15px;
+}
+
+.navbar a {
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.navbar a:hover {
+    text-decoration: underline;
+    transition: 0.25s ease-in-out;
+}
+
+.center {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 0px
+}
+
+.crop {
+    width: 100vw;
+    height: 40vh;
+    align-items: center;
+    overflow: hidden;
+    padding-top: 30px;
+}
+
+.imghtml {
+    width: 100vw;
+}
+
+.vertflex {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding-top: 30px;
+}
+
+.sideflex {
+    display: flex;
+    width: 97.5%;
+    margin-left: auto;
+    margin-right: auto;
+    flex-direction: row;
+    justify-content:space-between;
+    align-items: center;
+    box-shadow: 0px 0px 1px var(--clrback);
+    gap: 15px;
+}
+
+.linklist li{
+    list-style-type: circle;
+    margin-left: 20px;
+    padding: 10px 0px;
+}
+
+.resheader {
+    font-size: 50px;
+    padding-left: 20px;
+}
+
+.mobile-nav-menu-btn {
+	display: none;
+}
+
+.mobile-nav-menu-container {
+	position: absolute;
+	top: -20px;
+	right: -25px;
+	padding: 10px;
+	background-color: white;
+
+	display: none;
+}
+
+.mobile-nav-menu {
+	width: 150px;
+	height: 220px;
+	display: flex;
+	font-size: 0.75em;
+	flex-direction: column;
+	justify-content: space-around;
+    align-items: start;
+}
+
+.mobile-nav-menu a {
+    color: var(--clrheader);
+    text-decoration: none;
+}
+
+#misc-small {
+    display: none
+}
+
+@media screen and (max-width: 900px) {
+
+	.navbar {
+		display: none;
+	}
+
+	.mobile-nav-menu-btn {
+		display: flex;
+		padding-left: 15px;
+		height: 40px;
+		position: relative;
+		align-items: center;
+	}
+
+	.mobile-nav-menu-btn:hover .mobile-nav-menu-container {
+		display: block;
+        border-radius: 12px;
+	}
+}
+
+@media screen and (max-width: 700px) {
+    #misc-large {
+        display: none;
+    }
+
+    #misc-small {
+        display: contents;
+    }
+}

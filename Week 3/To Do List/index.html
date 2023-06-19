@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do List</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <header>To-Do List</header>
+        <div>
+            <h2>Add Item</h2>
+            <div>
+                <p>Description:</p>
+                <input type="text" v-model="description">
+            </div>
+            <div>
+                <p>Category:</p>
+                <input type="text" placeholder="School, Chores,..." v-model="category">
+            </div>
+            <button v-on:click="addTask()" id="addButton">Add</button>
+        </div>
+        <div>
+            <input type="text" placeholder="Search..." v-model="search">
+            <p>Search By Category</p>
+        </div>
+        <div class="tasks">
+            <div class="task-header" v-show="taskList.length > 0">
+                <div>Description</div>
+                <div>Category</div>
+                <div></div>
+                <div></div>
+            </div>
+            <div class="taskListed" v-for="(task, index) in taskList" v-if="filteredTaskList.length == 0 || search.length == 0">
+                <div>{{ task.description }}</div>
+                <div>{{ task.category }}</div>
+                <button v-on:click="toggleModal(index)">Edit</button>
+                <button v-on:click="removeTask(index)">Delete</button>
+            </div>
+            <div class="taskListed" v-for="(task, index) in filteredTaskList" v-else>
+                <div>{{ task.description }}</div>
+                <div>{{ task.category }}</div>
+                <button v-on:click="toggleFilteredModal(index)">Edit</button>
+                <button v-on:click="removeFilteredTask(index)">Delete</button>
+            </div>
+        </div>
+        <div class="modal" v-show="editing">
+            <div id="exitModal" v-on:click="toggleModal()">X</div>
+            <div>
+                <div class="edit-input">
+                    <p>Description:</p>
+                    <input type="text" v-model="modal.description">
+                </div>
+                <div>
+                    <p>Category:</p>
+                    <input type="text" v-model="modal.category">
+                </div>
+                <button id="saveButton" v-on:click="saveTaskChange()">Save</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
