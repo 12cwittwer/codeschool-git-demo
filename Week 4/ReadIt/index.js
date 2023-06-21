@@ -1,8 +1,9 @@
-// const book = {
-//     title: "Harry Potter",
-//     author: "JK Rowling",
-//     rating: "5",
-// };
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
+mongoose.connect(process.env.DB_LINK);
 
 const port = 8080;
 
