@@ -2,9 +2,10 @@ Vue.createApp({
     
     data: function() {
     return {
+        sorting: false,
         bookName: "",
-        bookAuthor: 0,
-        bookRating: 0,
+        bookAuthor: "",
+        bookRating: null,
         books: []
     };
     },
@@ -35,16 +36,53 @@ Vue.createApp({
                     this.books = data;
                 });
             });
+        },
+
+        sortBooksAuthor: function() {
+            console.log();
+            function compare(a, b) {
+                if (a.author < b.author) return -1;
+                if (a.author > b.author) return 1;
+                return 0;
+            }
+            this.books.sort(compare);
+            this.sorting = !this.sorting;
+        },
+
+        sortBooksTitle: function() {
+            console.log();
+            function compare(a, b) {
+                if (a.title < b.title) return -1;
+                if (a.title > b.title) return 1;
+                return 0;
+            }
+            this.books.sort(compare);
+            this.sorting = !this.sorting;
+        },
+
+        sortBooksRating: function() {
+            console.log();
+            function compare(a, b) {
+                if (a.rating > b.rating) return -1;
+                if (a.rating < b.rating) return 1;
+                return 0;
+            }
+            this.books.sort(compare);
+            this.sorting = !this.sorting;
+        },
+
+        toggleSort: function() {
+            this.sorting = !this.sorting
         }
     },
 
     computed: {
         heading: function() {
             if (this.books.length == 1) {
-                return `${this.books.length} book`;
+                return `${this.books.length} Book`;
             }
             else {
-                return `${this.books.length} books`;
+                return `${this.books.length} Books`;
             }
         }
     },

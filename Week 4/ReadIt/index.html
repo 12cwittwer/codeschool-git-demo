@@ -2,23 +2,41 @@
     <html>
         <head>
             <link rel="stylesheet" href="style.css">
-            <title>Read it</title>
+            <title>ReadIt</title>
         </head>
         <body>
-            <h1>Read it</h1>
+            <h1 class="title">ReadIt</h1>
             <div id="app">
             <!-- Everything in here is managed by Vue -->
-            <input type="text" placeholder="Book title" v-model="bookName">
-            <input type="text" placeholder="Author" v-model="bookAuthor">
-            <input type="text" placeholder="Rating" v-model="bookRating">
-            <button v-on:click="addBook">Add book</button>
+            <div class="input-boxes">
+                <input type="text" placeholder="Book title" v-model="bookName">
+                <input type="text" placeholder="Author" v-model="bookAuthor">
+                <input type="number" placeholder="Rating" v-model="bookRating">
+                <button v-on:click="addBook" class="add-button">Add book</button>
+            </div>
             <div v-if="books.length>0">
-                <h2>{{heading}}</h2>
-            <ol>
-                <li v-for="(book,i) in books" v-bind:style="{ backgroundColor: i % 2==0 ? '#EEEEEE' : 'CCCCCC' }">
+                <div class="head-row">
+                    <h2 class="book-count">{{heading}}</h2>
+                    <div>
+                        <div class="sort-option" v-on:click="toggleSort()">Sort Books</div>
+                        <div v-show="sorting" class="sort-box">
+                            <div>Sort By:</div>
+                            <div v-on:click="sortBooksTitle()">Title</div>
+                            <div v-on:click="sortBooksAuthor()">Author</div>
+                            <div v-on:click="sortBooksRating()">Rating</div>
+                            <div v-on:click="toggleSort()">X</div>
+                        </div>
+                    </div>
+                </div>
+            <ol class="book-list">
+                <li v-for="(book,i) in books" class="book">
                     <div><strong>{{ book.title }} </strong></div>
-                    <div>Calories: {{ book.author }} </div>
+                    <div>Author: {{ book.author }} </div>
                     <div>Rating: {{ book.rating }} </div>
+                    <div class="rating-bar">
+                        <div v-for="rate in book.rating" class="positive-review review-box"></div>
+                        <div v-for="rate in (100 - book.rating)" class="negative-review review-box"></div>
+                    </div>
                 </li>
             </ol>
             </div>

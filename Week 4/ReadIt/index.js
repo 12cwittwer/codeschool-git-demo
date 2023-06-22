@@ -1,26 +1,14 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+const express = require("express");
+const cors = require("cors");
+const app = express();
+app.use(cors());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
-dotenv.config();
-
-mongoose.connect(process.env.DB_LINK);
+const model = require("./model.js")
 
 const port = 8080;
 
-const myBooks = [{
-    title: "Harry Potter",
-    author: "JK Rowling",
-    rating: "3",
-}, {
-    title: "The Wolf",
-    author: "Leo Carew",
-    rating: "5",
-}, {
-    title: "The Republic",
-    author: "Plato",
-    rating: "5",
-}
-];
 
 function bookValidator (book) {
     var errors = [];
@@ -33,102 +21,108 @@ function bookValidator (book) {
     if (!book.rating) {
         errors.push("Book must have a rating");
     }
+    else if (isNaN(book.rating)) {
+        errors.push("Rating Must Be a Number");
+    }
+
     return errors
 }
 
-const express = require("express");
-const cors = require("cors");
 
-const app = express();
 
-app.use(cors());
-app.use(express.urlencoded({ extended: false }));
 
-app.use(express.urlencoded({ extended: false }));
 
 app.get("/books" , function(req, res) {
-    res.send(JSON.stringify(myBooks));
+    model.Book.find().then(function(books) {
+        res.send(books);
+    })
 });
 
 app.get("/books/:bookId", function(req, res) {
-    var index = req.params.bookId;
-
-    if (index >= 0 && index < myBooks.length) {
-        if (myBooks[index]) {
-            res.send(JSON.stringify(myBooks[index]));
+    model.Book.findOne({"_id" : req.params.bookId}).then(function(book) {
+        if (book) {
+            res.send(book);
         }
         else {
-            res.status(404).send("Book not Found");
+            res.status(404).send("Book Not Found");
         }
-    }
-    else {
-        res.status(404).send("Book Not Found.");
-    }
+    }).catch(function(errors) {
+        console.log(errors);
+        res.status(422).send("Bad Request");
+    })
 });
 
 app.post("/books", function(req, res) {
-    var new_book = {
+    var newBook = new model.Book({
         title: req.body.title,
         author: req.body.author,
         rating: req.body.rating,
-    }
+    });
 
-    var errors = bookValidator(new_book);
+    let errors = bookValidator(newBook);
 
-    if (errors.length == 0) {
-        myBooks.push(new_book);
-        res.status(201).send("Book Added");
+    if(errors.length == 0) {
+        newBook.save().then(function() {res.status(200).send("Book Saved")}).catch(function(errors) {
+            res.status(400).send(errors)
+        })
     }
     else {
-        res.status(422).send(errors);
+        res.status(400).send(errors);
     }
 });
 
 app.put("/books/:bookId", function(req,res) {
-    var index = req.params.bookId;
+    var bookId = req.params.bookId;
 
-    if (index >= 0 && index < myBooks.length) {
-        if (myBooks[index]) {
-        var updated_book = {
-            title: req.body.title,
-            author: req.body.author,
-            rating: req.body.rating,
-        }
+    model.Book.findOne({"_id" : bookId}).then(book => {
+        if (book) {
+            var newBook = {
+                title: req.body.title,
+                author: req.body.author,
+                rating: req.body.rating,
+            }
 
-        var errors = bookValidator(updated_book);
+            let errorList = bookValidator(newBook);
 
-        if(errors == 0) {
-            myBooks[index] = updated_book;
-            res.status(204).send("Book Updated");
+            if (errorList.length > 0) {
+                res.status(422).send("Change could not be made")
+            }
+            
+            else {
+                book.title = req.body.title;
+                book.author = req.body.author;
+                book.rating = req.body.rating;
+                model.Book.findOneAndUpdate({"_id": bookId} , book, {new: true, runValidators: true}).then(result => {
+                    res.status(200).send("Updated Book");
+            })
+            }
         }
         else {
-            res.status(422).send(errors);
+            res.status(404).send("Book Not Found")
         }
-    }
-        else {
-            res.status(404).send("Book Not Found");
-        }}
-
-    else {
-        res.status(404).send("Book Not Found");
-    }
+    }).catch(errors => {
+        console.log(errors);
+        res.status(400).send("Book not Found");
+    })
 });
 
 app.delete("/books/:bookId", function(req, res) {
-    var index = req.params.bookId
+    var bookId = req.params.bookId;
 
-    if (index >= 0 && index < myBooks.length) {
-        if (myBooks[index]) {
-            myBooks[index] = null;
-            res.status(204).send("Book Deleted");
+    model.Book.findOne({"_id": bookId}).then(book => {
+        if (book) {
+            model.Book.deleteOne({"_id" : bookId}).then(result => {
+                console.log(result.deletedCount);
+                res.status(204).send("Book Deleted");
+            })
         }
         else {
-            res.status(404).send("Book not Found")
+            res.status(404).send("Book Not Found");
         }
-    }
-    else {
-        res.status(404).send("Book not Found");
-    }
+    }).catch(errors => {
+        console.log(errors);
+        res.status(400).send("Book not Found/Error Deleting");
+    })
 })
 
 
