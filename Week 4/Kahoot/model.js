@@ -78,9 +78,24 @@ UserSchema.methods.verifyPassword = function(plainPassword) {
 const Quiz = mongoose.model("Quiz" , QuizSchema);
 const Question = mongoose.model("Question" , QuestionSchema);
 const User = mongoose.model("User" , UserSchema);
+const RedactedUser = mongoose.model("RedactedUser" , UserSchema);
+
+User.createCollection()
+
+// RedactedUser.createCollection({
+//     viewOn: "users",
+//     pipeline: [{
+//         $set: {
+//             name: "$name",
+//             email: "$email",
+//             password: "***"
+//         }
+//     }]
+// })
 
 module.exports = {
     Quiz : Quiz,
     Question : Question,
     User : User,
+    RedactedUser: RedactedUser,
 };

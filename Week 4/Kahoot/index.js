@@ -37,7 +37,8 @@ function AuthMiddleware(req, res, next) {
 };
 
 
-const model = require("./model.js")
+const model = require("./model.js");
+const { MongoUnexpectedServerResponseError } = require("mongodb");
 
 const port = 8080;
 
@@ -179,6 +180,11 @@ app.delete("/questions/:questionId" , AuthMiddleware , function(req, res) {
 //User
 app.get("/users" , AuthMiddleware , function(req, res) {
     model.User.find().then(function(user) {
+
+        for (var i=0; i < user.length; i++) {
+            user[i].password = "******"
+        }
+
         res.send(user);
     })
 })
@@ -204,7 +210,6 @@ app.post("/users" , function(req, res) {
     });
 
     newUser.setPassword(req.body.password).then(() => {
-        console.log(newUser);
         newUser.save().then(function() {
             res.status(200).send("User Created")
         }).catch(function(errors) {
@@ -282,6 +287,13 @@ app.post("/session" , function(req, res) {
         //user errors
         res.status(400).send("Couldn't authenticate request")
     })
+})
+
+app.delete("/session" , function(req, res) {
+    req.session.userId = undefined;
+    req.session.name = undefined;
+
+    res.status(204).send("Session Deleted");
 })
 
 app.listen(port, function() {

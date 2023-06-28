@@ -15,12 +15,31 @@ app.get("/reminders/:reminderId", function(req, res) {
     var index = req.params.reminderId;
     
     if (index >= 0 && index < reminders.length) {
+        if (reminders[index]) {
         //valid index
         res.send(JSON.stringify(reminders[index]))
-    }
+        }
+    else {
+    }}
 
     else {
         //invalid index
+        res.status(404).send("Reminder not Found")
+    }
+})
+
+app.delete("/reminders/:reminderId", function(req, res) {
+    var index = req.params.reminderId
+    if (index >= 0 && index < reminders.length) {
+        if (reminders[index]) {
+            reminders[index] = null
+            res.status(204).send("Reminder Deleted")
+        }
+        else {
+            res.status(404).send("Reminder not Found")
+        }
+    }
+    else {
         res.status(404).send("Reminder not Found")
     }
 })

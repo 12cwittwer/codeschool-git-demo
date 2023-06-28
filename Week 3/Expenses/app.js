@@ -17,7 +17,7 @@ Vue.createApp({
     },
     methods : {
         getExpenses: function() {
-            fetch('https://expenses.codeschool.cloud/expenses').then(response => response.json()).then((data) => {
+            fetch("http://localhost:8080/expenses").then(response => response.json()).then((data) => {
                 this.expenses = data;
             })
         },

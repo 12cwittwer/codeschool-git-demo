@@ -1,26 +1,27 @@
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
-
 dotenv.config();
 mongoose.connect(process.env.DB_LINK);
 
-const bookSchema = new mongoose.Schema({
-    title: {
+const expenseSchema = new mongoose.Schema({
+    description: {
         type: String,
-        required: [true, "Book Must Have a Title"]
+        required: [true, "There must be a description."]
     },
-    author: {
-        type: String,
-        required: [true, "Book Must Have an Author"]
-    },
-    rating: {
+    amount: {
         type: Number,
-        required: [true, "Book Must be Rated"]
+        required: [true, "There must be an amount."]
     },
-});
+    category: {
+        type: String,
+        required: [true, "There must be a category."]
+    },
+},
+{ timestamps: true }
+);
 
-const Book = mongoose.model("Book" , bookSchema);
+const Expense = mongoose.model("Expense" , expenseSchema);
 
 module.exports = {
-    Book: Book,
+    Expense: Expense,
 }
