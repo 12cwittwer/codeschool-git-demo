@@ -56,7 +56,10 @@ app.post("/expenses", function(req, res) {
     errors = expenseValidator(newExpense);
 
     if(errors.length == 0) {
-        newExpense.save().then(function() {res.status(200).send("Expense Saved")}).catch(function(errors) {
+        newExpense.save()
+        .then(function() {res.status(201)
+            .send(newExpense)})
+            .catch(function(errors) {
             res.status(400).send(errors)
         })
     }
@@ -87,7 +90,7 @@ app.put("/expenses/:expenseId", function(req,res) {
                 expense.amount = req.body.amount;
                 expense.category = req.body.category;
                 model.Expense.findOneAndUpdate({"_id": expenseId} , expense, {new: true, runValidators: true}).then(result => {
-                    res.status(200).send("Updated Expense");
+                    res.status(204).send("Updated Expense");
             })
             }
         }

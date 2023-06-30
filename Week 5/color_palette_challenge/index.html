@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <div>RGB Color Palette</div>
+            <div>
+                <div>
+                    <span>Red: </span>
+                    <input type="number" min="0" max="255" v-model="newColor.red">
+                </div>
+                <div>
+                    <span>Green: </span>
+                    <input type="number" min="0" max="255" v-model="newColor.green">
+                </div>
+                <div>
+                    <span>Blue: </span>
+                    <input type="number" min="0" max="255" v-model="newColor.blue">
+                </div>
+            </div>
+            <button>Add Color</button>
+            <div v-bind:style="{backgroundColor:rgbString}" class="display-color"></div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

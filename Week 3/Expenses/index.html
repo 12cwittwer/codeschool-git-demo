@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vue App</title>
+    <title>Expense Tracker</title>
     <link href="style.css" rel="stylesheet" type="text/css">
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
@@ -39,6 +39,7 @@
                 <div v-bind:style="[exp.amount > 0? {color: 'var(--green)'} : {color: 'var(--red)'}]">{{exp.amount}}</div>
                 <div>{{exp.category}}</div>
                 <button v-on:click="toggleModal(index)">Edit</button>
+                <button v-on:click="deleteExpense(index)">Delete</button>
             </div>
             <div class="row-footer">
                 <div>TOTAL</div>
@@ -47,6 +48,24 @@
                 <div></div>
             </div>
         </div>
+
+        <h2>Add Expense</h2>
+        <form @submit.prevent="addExpense()">
+            <label>
+                <span>Description</span>
+                <input type="text" v-model="newExpense.description">
+            </label>
+            <label>
+                <span>Amount</span>
+                <input type="text" v-model="newExpense.amount">
+            </label>
+            <label>
+                <span>Category</span>
+                <input type="text" v-model="newExpense.category">
+            </label>
+            <button>Add New</button>
+        </form>
+
         <div class="modal" v-show="modalOpen">
             <div class="content">
                 <div id="close" v-on:click="toggleModal()">X</div>
