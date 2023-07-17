@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="auth-page" v-if="page === 'auth'">
+            <h1>Kahout!</h1>
+            <h2>Sign Up</h2>
+            <form @submit.prevent="signup()" class="signup-form">
+                <label>
+                    <span>First Name</span>
+                    <input type="text" v-model="user.firstName">
+                </label>
+                <label>
+                    <span>Last Name</span>
+                    <input type="text" v-model="user.lastName">
+                </label>
+                <label>
+                    <span>Email</span>
+                    <input type="email" v-model="user.email">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" v-model="user.password">
+                </label>
+                <button>Sign Up</button>
+            </form>
+
+            <h2>Log In</h2>
+            <form @submit.prevent="createSession()"  class="signup-form">
+                <label>
+                    <span>First Name</span>
+                    <input type="text" v-model="user.firstName">
+                </label>
+                <label>
+                    <span>Last Name</span>
+                    <input type="text" v-model="user.lastName">
+                </label>
+                <label>
+                    <span>Email</span>
+                    <input type="email" v-model="user.email">
+                </label>
+                <label>
+                    <span>Password</span>
+                    <input type="password" v-model="user.password">
+                </label>
+                <button>Log In</button>
+            </form>
+        </div>
+
+        <div class="page" v-if="page === ''">
+            <div @click="logout()">Logout</div>
+            <div @click="page = 'createQuiz'">Add Quiz</div>
+            <h1>Kahout!</h1>
+            <h2>Quizzes</h2>
+            <div class="row">
+                <div v-for="(quiz, index) in quizzes" class="card" :style="{backgroundImage: getRandomGradient()}" @click="displayQuiz(index)">
+                    <h3>{{quiz.title}}</h3>
+                    <p>{{quiz.description}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="page" v-if="page === 'createQuiz'">
+            <div @click="page = ''">&lt; Back</div>
+            <h2>Create Quiz</h2>
+
+            <form @submit.prevent="createQuiz()">
+                <label>
+                    <span>Quiz Title</span>
+                    <input type="text" v-model="newQuiz.title">
+                </label>
+                <label>
+                    <span>Description</span>
+                    <input type="text" v-model="newQuiz.description">
+                </label>
+                <h3>Questions</h3>
+                <div class="question" v-for="(question, index) in newQuestions">
+                    <label>
+                        <span>Question Text</span>
+                        <input type="text" v-model="question.text">
+                    </label>
+
+                    <div class="answer" v-for="answer in question.answers">
+                        <label>
+                            <span>Answer Text</span>
+                            <input type="text" v-model="answer.answerText">
+                        </label>
+                        <label>
+                            <span>It is Correct?</span>
+                            <input type="text" v-model="answer.isTrue">
+                        </label>
+                    </div>
+                    <button type="button" @click="addAnswer(index)">Add Answer</button>
+                </div>
+                <button type="button" @click="addQuestion()">Add Question</button>
+                <button>Create Quiz</button>
+            </form>
+        </div>
+
+        <div class="page" v-if="page === 'displayQuiz'">
+            <div @click="page = ''">&lt; Back</div>
+            <h3>{{ quizzes[quizShown].title }}</h3>
+            <p>{{ quizzes[quizShown].description }}</p>
+            <div v-for="question in quizzes[quizShown].questions">
+                <p>{{question.text}}</p>
+                <span v-show="question.isTrue">&check;</span>
+
+                <ul>
+                    <li v-for="ans in question.answers">
+                        {{ans}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

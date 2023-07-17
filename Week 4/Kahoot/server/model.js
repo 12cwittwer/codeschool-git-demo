@@ -16,7 +16,10 @@ const QuestionSchema = new mongoose.Schema ({
             type: String,
             required: [true, "Answer must have text"]
         },
-        isTrue: Boolean
+        isTrue: {
+            type: Boolean,
+            required: true
+        }
     }]
 });
 

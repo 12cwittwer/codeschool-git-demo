@@ -13,8 +13,10 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(express.static("public"));
 app.use(session({
     secret: "jao84028jhf9ja8he03089j920j00nv0hg8halpmzx",
+    cookie: {secure: false, httpOnly: false, sameSite: 'lax'},
     saveUninitialized: true,
     resave: false,
 }));
@@ -69,10 +71,17 @@ app.post("/quizzes", AuthMiddleware, function(req, res) {
         questions: req.body.questions,
     })
 
+    console.log(req.body.questions)
+
     newQuiz.save().then(function() {
         res.status(200).send("Quiz Saved")
-    }).catch(function(errors) {
-        res.status(400).send("Quiz Was not Able to Save")
+    }).catch((errors) => {
+        let error_list = [];
+        for (var key in errors.errors) {
+            error_list.push(errors.errors[key].message);
+        }
+        console.log(error_list)
+        res.status(422).send(error_list);
     })
 });
 
@@ -211,9 +220,9 @@ app.post("/users" , function(req, res) {
 
     newUser.setPassword(req.body.password).then(() => {
         newUser.save().then(function() {
-            res.status(200).send("User Created")
+            res.status(201).send("User Created")
         }).catch(function(errors) {
-            res.status(422).send("Could not save new user")
+            res.status(422).send(errors)
         })
     })
 });
@@ -255,8 +264,7 @@ app.delete("/users/:userId", AuthMiddleware , function(req, res) {
 
 //Session
 app.get("/session" , function(req, res) {
-    console.log(req.session);
-    res.send()
+    res.send(req.session)
 })
 
 app.post("/session" , function(req, res) {
@@ -271,7 +279,7 @@ app.post("/session" , function(req, res) {
                         //password matches
                         req.session.userId = user._id;
                         req.session.firstName = user.firstName;
-                        res.status(201).send("Session Created")
+                        res.status(201).send(req.session)
                     }
                     else {
                         //password doesn't match
