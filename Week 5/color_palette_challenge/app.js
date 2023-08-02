@@ -6,15 +6,41 @@ Vue.createApp({
                 green: 0,
                 blue: 0,
             },
-            rgbString: '',
+
+            colorPalette: [],
+            checkColor: false,
         }
     },
     methods : {
-        colorString: function() {
-            return "rgb(" + this.newColor.red + "," + this.newColor.green + "," + this.newColor.blue + ")";
+        addColor: function() {
+            var index = this.colorPalette.indexOf(this.rgbString);
+            if (index < 0) {
+            this.colorPalette.push(this.rgbString);
+            }
+        },
+        complimentColor: function() {
+            for (color in this.newColor) {
+                this.newColor[color] = 255 - this.newColor[color];
+            }
+        },
+        changeRed: function(index) {
+            this.newColor.red = (index-1);
         },
     },
     created : function() {
-        this.colorString()
-    }
+        console.log(this.rgbComp)
+    },
+    computed: {
+        rgbString() {
+            return "rgb(" + this.newColor.red + "," + this.newColor.green + "," + this.newColor.blue + ")";
+        },
+        rgbComp() {
+            return "rgb(" + (255 - this.newColor.red) + "," + (255 - this.newColor.green) + "," + (255 - this.newColor.blue) + ")";
+        }
+    },
+    watch: {
+        rgbString: function() {
+            document.body.style.backgroundColor = this.rgbComp;
+        }
+    },
 }).mount("#app");

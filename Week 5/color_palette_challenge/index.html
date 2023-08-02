@@ -10,14 +10,17 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 </head>
 
-<body>
+<body v-bind:style="{backgroundColor:rgbComp}">
     <div id="app">
         <div>
             <div>RGB Color Palette</div>
-            <div>
+            <div class="color-input">
                 <div>
                     <span>Red: </span>
                     <input type="number" min="0" max="255" v-model="newColor.red">
+                    <div class="slide-box">
+                        <div v-for="i in 256" class="color-slider" :style="{ backgroundColor: 'rgb(' + i + ', 0, 0)' }" @click="changeRed(i)"></div>
+                    </div>
                 </div>
                 <div>
                     <span>Green: </span>
@@ -28,9 +31,13 @@
                     <input type="number" min="0" max="255" v-model="newColor.blue">
                 </div>
             </div>
-            <button>Add Color</button>
-            <div v-bind:style="{backgroundColor:rgbString}" class="display-color"></div>
+        <button @click="addColor">Add Color</button>
+        <div v-bind:style="{backgroundColor:rgbString}" class="display-color"></div>
         </div>
+        <div class="display-box">
+            <div class="display-saved" v-for="color in colorPalette" v-bind:style="{backgroundColor: color}"></div>
+        </div>
+        <button @click="complimentColor">Complimentary Color</button>
     </div>
     <script src="app.js"></script>
 </body>

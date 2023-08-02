@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+    <link href="style.css" rel="stylesheet" type="text/css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div class="title">St. George, UT</div>
+        <div v-if="weatherInfo.current_weather" class="today">
+            <span>{{weatherInfo.current_weather.temperature}}&deg;C</span>
+            <span>{{codeInt}}</span>
+        </div>
+
+        <div class="sum-today">
+            <span>H:{{sumToday.temp_max}} - L:{{sumToday.temp_min}}&deg;C</span>
+            <span>{{sumToday.precip}}%</span>
+        </div>
+
+        <div class="windandrain">
+            <div v-if="weatherInfo.current_weather" class="wind">
+                <span>Wind</span>
+                <span>{{weatherInfo.current_weather.winddirection}}&deg</span>
+                <span>{{weatherInfo.current_weather.windspeed}}km/h</span>
+            </div>
+            <div v-if="weatherInfo.current_weather" class="wind">
+                <span>Today's Precipitation</span>
+                <span>{{weatherInfo.daily.precipitation_sum[0]}}mm</span>
+            </div>
+        </div>
+
+        <div @click="toggleModal()" class="modal-btn">Future Forecast</div>
+
+
+        <div class="modal" v-show="modal">
+            <div class="cast-today">
+                <span>Today's Weather</span>
+                <div class="grid-hours"> 
+                    <div v-for="forecast of hourForecast" class="hours">
+                        <span class="time">{{forecast.hour}}</span>
+                        <span>{{forecast.temp}}&deg;C</span>
+                        <span>{{forecast.precip}}mm</span>
+                    </div>
+                </div>
+            </div>
+            <!-- Hourly for the next 10 hours -->
+
+            <div class="daily">
+                <span>Weekly Forecast</span>
+                <div class="grid-day">
+                    <div v-for="forecast of weekForecast" class="day">
+                        <span>{{forecast.temp_max}}&deg;C</span>
+                        <span>{{forecast.temp_min}}&deg;C</span>
+                        <span>{{forecast.precip}}%</span>
+                    </div>
+                </div>
+            </div>
+            <div @click="toggleModal()" class="modal-btn">x</div>
+        </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
